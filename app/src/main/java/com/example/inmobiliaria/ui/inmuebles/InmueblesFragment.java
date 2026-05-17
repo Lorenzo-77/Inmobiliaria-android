@@ -1,4 +1,4 @@
-package com.example.inmobiliaria;
+package com.example.inmobiliaria.ui.inmuebles;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.inmobiliaria.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link InquilinosFragment#newInstance} factory method to
+ * Use the {@link InmueblesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InquilinosFragment extends Fragment {
+public class InmueblesFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class InquilinosFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public InquilinosFragment() {
+    public InmueblesFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class InquilinosFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment InquilinosFragment.
+     * @return A new instance of fragment InmueblesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static InquilinosFragment newInstance(String param1, String param2) {
-        InquilinosFragment fragment = new InquilinosFragment();
+    public static InmueblesFragment newInstance(String param1, String param2) {
+        InmueblesFragment fragment = new InmueblesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class InquilinosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inquilinos, container, false);
+        return inflater.inflate(R.layout.fragment_inmuebles, container, false);
     }
 }

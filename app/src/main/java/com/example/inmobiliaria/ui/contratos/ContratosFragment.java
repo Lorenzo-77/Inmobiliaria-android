@@ -1,4 +1,4 @@
-package com.example.inmobiliaria;
+package com.example.inmobiliaria.ui.contratos;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.inmobiliaria.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LogoutFragment#newInstance} factory method to
+ * Use the {@link ContratosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LogoutFragment extends Fragment {
+public class ContratosFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class LogoutFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public LogoutFragment() {
+    public ContratosFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class LogoutFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LogoutFragment.
+     * @return A new instance of fragment ContratosFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LogoutFragment newInstance(String param1, String param2) {
-        LogoutFragment fragment = new LogoutFragment();
+    public static ContratosFragment newInstance(String param1, String param2) {
+        ContratosFragment fragment = new ContratosFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -58,7 +60,6 @@ public class LogoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logout, container, false);
+         return inflater.inflate(R.layout.fragment_contratos, container, false);
     }
 }
