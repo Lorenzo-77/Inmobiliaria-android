@@ -32,6 +32,25 @@
         <EditText android:id="@+id/etSuperficie" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Superficie" android:inputType="number" android:layout_marginBottom="8dp"/>
         <EditText android:id="@+id/etValor" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Valor / Precio" android:inputType="numberDecimal" android:layout_marginBottom="16dp"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿Está disponible?"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <Switch
+                android:id="@+id/swDisponible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/btGuardar"
             android:layout_width="match_parent"

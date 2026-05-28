@@ -56,8 +56,9 @@ public class InmueblesAgregarViewModel extends AndroidViewModel {
         return mUri;
     }
 
+    // AHORA RECIBE EL boolean disponible AL FINAL
     public void cargarInmueble(String direccion, String uso, String tipo,
-                               String ambientes, String superficie, String valor){
+                               String ambientes, String superficie, String valor, boolean disponible){
         try {
             if(!direccion.isEmpty() || !uso.isEmpty() || !tipo.isEmpty() || !ambientes.isEmpty()
                     || !superficie.isEmpty() || !valor.isEmpty()){
@@ -67,10 +68,9 @@ public class InmueblesAgregarViewModel extends AndroidViewModel {
                 i.setUso(uso);
                 i.setTipo(tipo);
                 i.setAmbientes(Integer.parseInt(ambientes));
-
                 i.setValor(Double.parseDouble(valor));
-
-                i.setDisponible(false);
+                i.setSuperficie(Integer.parseInt(superficie));
+                i.setDisponible(disponible); // ACÁ LE ASIGNA LO QUE VOS ELEGISTE
 
                 byte[] imagen = transformarImagen();
                 if (imagen.length == 0){

@@ -52,7 +52,8 @@ public class InmueblesAgregarFragment extends Fragment {
                     b.etTipo.getText().toString(),
                     b.etAmbientes.getText().toString(),
                     b.etSuperficie.getText().toString(),
-                    b.etValor.getText().toString()
+                    b.etValor.getText().toString(),
+                    b.swDisponible.isChecked()
             );
         });
 
