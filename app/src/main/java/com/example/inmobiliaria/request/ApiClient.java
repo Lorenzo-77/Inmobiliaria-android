@@ -3,7 +3,9 @@ package com.example.inmobiliaria.request;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.inmobiliaria.modelo.Contrato;
 import com.example.inmobiliaria.modelo.Inmueble;
+import com.example.inmobiliaria.modelo.Pago;
 import com.example.inmobiliaria.modelo.Propietario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -69,6 +71,15 @@ public class ApiClient {
                 @Part okhttp3.MultipartBody.Part imagen,
                 @Part("inmueble") okhttp3.RequestBody inmueble
         );
+
+        @GET("api/Inmuebles/GetContratoVigente")
+        Call<List<Inmueble>> obtenerInmueblesAlquilados(@Header("Authorization") String token);
+
+        @GET("api/contratos/inmueble/{id}")
+        Call<Contrato> obtenerContratoPorInmueble(@Header("Authorization") String token, @Path("id") int idInmueble);
+
+        @GET("api/pagos/contrato/{id}")
+        Call<List<Pago>> obtenerPagosPorContrato(@Header("Authorization") String token, @Path("id") int idContrato);
     }
 
     public static void setToken(Context context, String token) {

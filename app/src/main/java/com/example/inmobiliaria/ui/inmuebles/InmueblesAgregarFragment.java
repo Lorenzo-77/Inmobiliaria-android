@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast; // IMPORTANTE PARA EL TOAST
 
 import com.example.inmobiliaria.databinding.FragmentInmueblesAgregarBinding;
 
@@ -37,8 +38,13 @@ public class InmueblesAgregarFragment extends Fragment {
         b = FragmentInmueblesAgregarBinding.inflate(inflater, container, false);
         vm = new ViewModelProvider(this).get(InmueblesAgregarViewModel.class);
 
+
         vm.getmUri().observe(getViewLifecycleOwner(), uri -> {
             b.ivFoto.setImageURI(uri);
+        });
+
+        vm.getMensaje().observe(getViewLifecycleOwner(), mensaje -> {
+            Toast.makeText(getContext(), mensaje, Toast.LENGTH_LONG).show();
         });
 
         b.btCargarImagen.setOnClickListener(view -> {
@@ -67,7 +73,6 @@ public class InmueblesAgregarFragment extends Fragment {
             @Override
             public void onActivityResult(ActivityResult resultado) {
                 vm.recibirFoto(resultado);
-                Log.d("galeria", "onActivityResult: " + resultado.toString());
             }
         });
     }

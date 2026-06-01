@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:layout_marginBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Información del Contrato"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3F51B5"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView android:id="@+id/tvContratoCodigo" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Código de Contrato: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvContratoFechaInicio" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Fecha de Inicio: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvContratoFechaFin" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Fecha de Fin: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvContratoMonto" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Monto de Alquiler: $" android:textSize="18sp" android:textStyle="bold" android:textColor="#4CAF50" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvContratoInquilino" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Inquilino: " android:textSize="16sp" android:layout_marginBottom="16dp"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btVerPagos"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Ver Pagos"
+        android:textSize="18sp"
+        android:backgroundTint="#FF9800"
+        app:cornerRadius="8dp"/>
+
+</LinearLayout>

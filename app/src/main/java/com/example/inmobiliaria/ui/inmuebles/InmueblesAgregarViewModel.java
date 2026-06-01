@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
@@ -33,20 +32,10 @@ import retrofit2.Response;
 
 public class InmueblesAgregarViewModel extends AndroidViewModel {
     private MutableLiveData<Uri> mUri;
+    private MutableLiveData<String> mMensaje; // NUEVO: Variable para los avisos
 
     public InmueblesAgregarViewModel(@NonNull Application application) {
         super(application);
-    }
-
-    public void recibirFoto(ActivityResult resultado) {
-        if (resultado.getResultCode() == RESULT_OK) {
-            Intent data = resultado.getData();
-            if (data != null && data.getData() != null) {
-                Uri uri = data.getData();
-                Log.d("salada", uri.toString());
-                mUri.setValue(uri);
-            }
-        }
     }
 
     public LiveData<Uri> getmUri() {
@@ -56,7 +45,25 @@ public class InmueblesAgregarViewModel extends AndroidViewModel {
         return mUri;
     }
 
-    // AHORA RECIBE EL boolean disponible AL FINAL
+    // NUEVO: Getter para que el Fragment pueda escuchar los mensajes
+    public LiveData<String> getMensaje() {
+        if(mMensaje == null){
+            mMensaje = new MutableLiveData<>();
+        }
+        return mMensaje;
+    }
+
+    public void recibirFoto(ActivityResult resultado) {
+        if (resultado.getResultCode() == RESULT_OK) {
+            Intent data = resultado.getData();
+            if (data != null && data.getData() != null) {
+                Uri uri = data.getData();
+                if(mUri == null) mUri = new MutableLiveData<>();
+                mUri.setValue(uri);
+            }
+        }
+    }
+
     public void cargarInmueble(String direccion, String uso, String tipo,
                                String ambientes, String superficie, String valor, boolean disponible){
         try {
@@ -70,11 +77,11 @@ public class InmueblesAgregarViewModel extends AndroidViewModel {
                 i.setAmbientes(Integer.parseInt(ambientes));
                 i.setValor(Double.parseDouble(valor));
                 i.setSuperficie(Integer.parseInt(superficie));
-                i.setDisponible(disponible); // ACÁ LE ASIGNA LO QUE VOS ELEGISTE
+                i.setDisponible(disponible);
 
                 byte[] imagen = transformarImagen();
                 if (imagen.length == 0){
-                    Toast.makeText(getApplication(), "Debe ingresar imagen", Toast.LENGTH_LONG).show();
+                    mMensaje.setValue("Debe ingresar una imagen"); // FEEDBACK 2
                     return;
                 }
 
@@ -84,37 +91,34 @@ public class InmueblesAgregarViewModel extends AndroidViewModel {
                 MultipartBody.Part imagenPart = MultipartBody.Part.createFormData("imagen", "imagen.jpg", requestFile);
 
                 ApiClient.ServicioInmobiliaria si = ApiClient.getServicio();
-
                 Call<Inmueble> call = si.agregarInmueble(ApiClient.getToken(getApplication()), imagenPart, inmuebleBody);
 
                 call.enqueue(new Callback<Inmueble>() {
                     @Override
                     public void onResponse(Call<Inmueble> call, Response<Inmueble> response) {
                         if (response.isSuccessful()){
-                            Toast.makeText(getApplication(), "Inmueble guardado correctamente", Toast.LENGTH_LONG).show();
+                            mMensaje.setValue("Inmueble guardado correctamente"); // FEEDBACK 2
                         } else {
-                            Toast.makeText(getApplication(), "Error al cargar inmueble", Toast.LENGTH_LONG).show();
-                            Log.d("ERROR", "codigo: " + response.code());
-                            Log.d("ERROR", "mensaje: " + response.message());
+                            mMensaje.setValue("Error al cargar inmueble"); // FEEDBACK 2
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Inmueble> call, Throwable t) {
-                        Toast.makeText(getApplication(), "On failure", Toast.LENGTH_LONG).show();
+                        mMensaje.setValue("Fallo de conexión"); // FEEDBACK 2
                     }
                 });
             } else {
-                Toast.makeText(getApplication(), "Debe llenar todos los campos.", Toast.LENGTH_LONG).show();
+                mMensaje.setValue("Debe llenar todos los campos."); // FEEDBACK 2
             }
         } catch (NumberFormatException e){
-            Toast.makeText(getApplication(), "Superficie, ambientes y valor deben ser numéricos", Toast.LENGTH_LONG).show();
+            mMensaje.setValue("Superficie, ambientes y valor deben ser numéricos"); // FEEDBACK 2
         }
     }
 
     private byte[] transformarImagen(){
         try {
-            if (mUri.getValue() == null) return new byte[]{};
+            if (mUri == null || mUri.getValue() == null) return new byte[]{};
             Uri uri = mUri.getValue();
             InputStream inputStream = getApplication().getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
@@ -122,7 +126,7 @@ public class InmueblesAgregarViewModel extends AndroidViewModel {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
         } catch (FileNotFoundException ex) {
-            Toast.makeText(getApplication(), "Debe ingresar una foto", Toast.LENGTH_LONG).show();
+            mMensaje.setValue("Error al procesar la foto");
             return new byte[]{};
         }
     }

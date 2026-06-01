@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Datos del Inquilino"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3F51B5"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView android:id="@+id/tvInquilinoCodigo" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Código: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvInquilinoNombre" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Nombre: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvInquilinoApellido" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Apellido: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvInquilinoDni" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="DNI: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvInquilinoEmail" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Email: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvInquilinoTelefono" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Teléfono: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvInquilinoLugarTrabajo" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Lugar de Trabajo: " android:textSize="16sp" android:layout_marginBottom="16dp"/>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#CCCCCC" android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Datos del Garante"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#3F51B5"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView android:id="@+id/tvGaranteNombre" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Nombre: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/tvGaranteDni" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="DNI: " android:textSize="16sp" android:layout_marginBottom="8dp"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</ScrollView>

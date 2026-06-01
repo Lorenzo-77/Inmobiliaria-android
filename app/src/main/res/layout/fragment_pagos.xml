@@ -5,7 +5,7 @@
     android:background="#F5F5F5">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvInquilinos"
+        android:id="@+id/rvPagos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"

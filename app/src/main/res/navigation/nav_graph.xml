@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@+id/nav_inicio">
+
     <fragment
         android:id="@+id/nav_inicio"
         android:name="com.example.inmobiliaria.ui.inicio.InicioFragment"
@@ -21,6 +22,7 @@
         android:name="com.example.inmobiliaria.ui.inmuebles.InmueblesFragment"
         android:label="Mis Inmuebles"
         tools:layout="@layout/fragment_inmuebles" />
+
     <fragment
         android:id="@+id/nav_inmueble_detalle"
         android:name="com.example.inmobiliaria.ui.inmuebles.InmuebleDetalleFragment"
@@ -34,23 +36,45 @@
         tools:layout="@layout/fragment_inquilinos" />
 
     <fragment
+        android:id="@+id/nav_inquilino_detalle"
+        android:name="com.example.inmobiliaria.ui.inquilinos.InquilinoDetalleFragment"
+        android:label="Detalle del Inquilino"
+        tools:layout="@layout/fragment_inquilino_detalle" />
+
+    <fragment
         android:id="@+id/nav_contratos"
         android:name="com.example.inmobiliaria.ui.contratos.ContratosFragment"
         android:label="Contratos"
         tools:layout="@layout/fragment_contratos" />
+
     <fragment
         android:id="@+id/nav_perfil_editar"
         android:name="com.example.inmobiliaria.ui.perfileditar.PerfilEditarFragment"
         android:label="Cambiar Contraseña"
         tools:layout="@layout/fragment_perfil_editar" />
+
     <fragment
         android:id="@+id/nav_agregar_inmueble"
         android:name="com.example.inmobiliaria.ui.inmuebles.InmueblesAgregarFragment"
         android:label="Nuevo Inmueble"
         tools:layout="@layout/fragment_inmuebles_agregar" />
+
     <fragment
         android:id="@+id/nav_logout"
         android:name="com.example.inmobiliaria.ui.logout.LogoutFragment"
         android:label="Cerrar Sesión"
         tools:layout="@layout/fragment_logout" />
+
+    <fragment
+        android:id="@+id/nav_contrato_detalle"
+        android:name="com.example.inmobiliaria.ui.contratos.ContratoDetalleFragment"
+        android:label="Detalle del Contrato"
+        tools:layout="@layout/fragment_contrato_detalle" />
+
+    <fragment
+        android:id="@+id/nav_pagos"
+        android:name="com.example.inmobiliaria.ui.pagos.PagosFragment"
+        android:label="Pagos del Contrato"
+        tools:layout="@layout/fragment_pagos" />
+
 </navigation>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation; // IMPORTANTE PARA NAVEGAR ATRÁS
 
 import com.example.inmobiliaria.LoginActivity;
 import com.example.inmobiliaria.databinding.FragmentLogoutBinding;
@@ -32,7 +33,6 @@ public class LogoutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         new AlertDialog.Builder(requireContext())
                 .setTitle("Cerrar Sesión")
                 .setMessage("¿Está seguro de que desea salir de la aplicación?")
@@ -50,6 +50,7 @@ public class LogoutFragment extends Fragment {
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
+                        Navigation.findNavController(view).navigateUp();
                     }
                 })
                 .setCancelable(false)

@@ -5,25 +5,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.inmobiliaria.databinding.FragmentInmuebleDetalleBinding;
 import com.example.inmobiliaria.modelo.Inmueble;
 import com.example.inmobiliaria.request.ApiClient;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class InmuebleDetalleFragment extends Fragment {
 
     private FragmentInmuebleDetalleBinding binding;
+    private InmuebleDetalleViewModel viewModel;
     private Inmueble inmueble;
 
     public InmuebleDetalleFragment() {}
@@ -38,10 +33,13 @@ public class InmuebleDetalleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        viewModel = new ViewModelProvider(this).get(InmuebleDetalleViewModel.class);
+
         if (getArguments() != null) {
             inmueble = (Inmueble) getArguments().getSerializable("inmueble");
             if (inmueble != null) {
                 cargarDatos();
+                configurarObservers();
                 configurarSwitch();
             }
         }
@@ -51,9 +49,7 @@ public class InmuebleDetalleFragment extends Fragment {
         binding.tvDetalleDireccion.setText("Dirección: " + inmueble.getDireccion());
         binding.tvDetalleValor.setText("Valor: $ " + inmueble.getValor());
         binding.tvDetalleAmbientes.setText("Ambientes: " + inmueble.getAmbientes());
-
         binding.tvDetalleSuperficie.setText("Superficie: " + inmueble.getSuperficie());
-
         binding.tvDetalleUso.setText("Uso: " + inmueble.getUso());
         binding.tvDetalleTipo.setText("Tipo: " + inmueble.getTipo());
         actualizarColorEstado(inmueble.isDisponible());
@@ -63,6 +59,19 @@ public class InmuebleDetalleFragment extends Fragment {
                 .load(urlImagen)
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .into(binding.ivDetalleImagen);
+    }
+
+    private void configurarObservers() {
+        // FEEDBACK 2: El Fragment es el único que muestra Toasts observando al ViewModel
+        viewModel.getmExito().observe(getViewLifecycleOwner(), mensaje -> {
+            actualizarColorEstado(binding.swDetalleEstado.isChecked());
+            Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+        });
+
+        viewModel.getmError().observe(getViewLifecycleOwner(), mensaje -> {
+            revertirSwitch(binding.swDetalleEstado.isChecked());
+            Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void actualizarColorEstado(boolean estaDisponible) {
@@ -80,32 +89,7 @@ public class InmuebleDetalleFragment extends Fragment {
         binding.swDetalleEstado.setChecked(inmueble.isDisponible());
 
         binding.swDetalleEstado.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            String token = ApiClient.getToken(getContext());
-            if (token != null) {
-                inmueble.setDisponible(isChecked);
-
-                ApiClient.ServicioInmobiliaria api = ApiClient.getServicio();
-                Call<Inmueble> call = api.cambiarEstadoInmueble(token, inmueble);
-
-                call.enqueue(new Callback<Inmueble>() {
-                    @Override
-                    public void onResponse(Call<Inmueble> call, Response<Inmueble> response) {
-                        if (response.isSuccessful()) {
-                            actualizarColorEstado(isChecked);
-                            Toast.makeText(getContext(), "Disponibilidad actualizada", Toast.LENGTH_SHORT).show();
-                        } else {
-                            revertirSwitch(isChecked);
-                            Toast.makeText(getContext(), "Error al actualizar en servidor", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Inmueble> call, Throwable t) {
-                        revertirSwitch(isChecked);
-                        Toast.makeText(getContext(), "Fallo de conexión", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+            viewModel.actualizarDisponibilidad(inmueble, isChecked);
         });
     }
 

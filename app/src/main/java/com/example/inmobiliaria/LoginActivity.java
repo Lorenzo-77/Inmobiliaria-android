@@ -1,8 +1,6 @@
 package com.example.inmobiliaria;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,8 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -30,6 +26,8 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
     private static final int SHAKE_THRESHOLD = 800;
+    private boolean llamando = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,18 +53,16 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
             }
         });
 
-
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         if (sensorManager != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
-
+        llamando = false;
         if (accelerometer != null) {
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
@@ -75,7 +71,6 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
     @Override
     protected void onPause() {
         super.onPause();
-
         if (sensorManager != null) {
             sensorManager.unregisterListener(this);
         }
@@ -96,8 +91,9 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
 
                 float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
 
-                if (speed > SHAKE_THRESHOLD) {
 
+                if (speed > SHAKE_THRESHOLD && !llamando) {
+                    llamando = true;
                     hacerLlamada();
                 }
 
@@ -110,21 +106,14 @@ public class LoginActivity extends AppCompatActivity implements SensorEventListe
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     private void hacerLlamada() {
+
+        Toast.makeText(this, "Abriendo teléfono para llamar a Inmobiliaria...", Toast.LENGTH_SHORT).show();
         String numeroInmobiliaria = "tel:123456789";
-        Intent intent = new Intent(Intent.ACTION_CALL);
+        Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse(numeroInmobiliaria));
-
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
-        } else {
-
-            startActivity(intent);
-        }
+        startActivity(intent);
     }
 }
